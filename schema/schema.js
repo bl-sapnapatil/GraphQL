@@ -1,4 +1,6 @@
 const graphql = require('graphql');
+const Book = require('../models/book');
+const Author = require('../models/author');
 
 const { GraphQLObjectType, GraphQLString,
     GraphQLID, GraphQLInt, GraphQLSchema } = graphql;
@@ -7,11 +9,6 @@ const { GraphQLObjectType, GraphQLString,
 //these object types and descibes how it can reach into the graph to interact with 
 //the data to retrieve or mutate the data   
 
-var fakeBookDatabase = [
-    { name: "Book 1", pages: 432, id: 1 },
-    { name: "Book 2", pages: 32, id: 2 },
-    { name: "Book 3", pages: 532, id: 3 }
-]
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
@@ -36,9 +33,22 @@ const RootQuery = new GraphQLObjectType({
                 //Here we define how to get data from database source
 
                 //this will return the book with id passed in argument by the user
-                return fakeBookDatabase.find((item) => { return item.id == args.id });
+                return Book.findById(args.id);
             }
-        }
+        },
+        books: {
+            type: new GraphQLList(BookType),
+            resolve(parent, args) {
+                return Book.find({});
+            }
+        },
+        author: {
+            type: AuthorType,
+            args: { id: { type: GraphQLID } },
+            resolve(parent, args) {
+                return Author.findById(args.id);
+            }
+        },
     }
 });
 

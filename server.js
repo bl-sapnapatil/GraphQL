@@ -17,7 +17,7 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }));
 
-mongoose.connect('mongodb://localhost:27017/fundoo_Notes', {useNewUrlParser: true,useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/graphql', { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.once('open', () => {
     console.log('conneted to database');
