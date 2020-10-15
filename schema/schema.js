@@ -31,7 +31,7 @@ const RootQuery = new GraphQLObjectType({
         book: {
             type: BookType,
             //argument passed by the user while making the query
-            args: { pages: { type: GraphQLInt } },
+            args: { id: { type: GraphQLID } },
             resolve(parent, args) {
                 //Here we define how to get data from database source
 
